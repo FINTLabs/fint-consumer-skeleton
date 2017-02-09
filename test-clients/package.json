@@ -1,0 +1,10 @@
+{
+  "name": "test-clients",
+  "scripts": {
+    "health": "node health.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "uuid": "^3.0.1"
+  }
+}
