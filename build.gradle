@@ -52,6 +52,7 @@ dependencies {
     compile('no.fint:fint-events:0.0.24')
     compile('no.fint:fint-event-model:0.0.11')
     compile('no.fint:fint-audit-mongo-plugin:0.0.12')
+    compile('com.github.fakemongo:fongo:2.0.12')
 
     compile('org.projectlombok:lombok')
     compile('no.fint:fint-cache:0.0.2')

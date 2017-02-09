@@ -3,6 +3,7 @@ package no.fint.consumer.admin;
 import no.fint.consumer.event.EventUtil;
 import no.fint.event.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,11 @@ public class AdminService {
     @Autowired
     private EventUtil eventUtil;
 
+    @Value("${springfox.title}")
+    private String title;
+
     public Health healthCheck(String orgId, String client) {
-        Event event = new Event(orgId, "consumer-skeleton", "HEALTH", client);
+        Event event = new Event(orgId, title, "HEALTH", client);
         Optional<Event> upstreamEvent = eventUtil.sendAndReceive(event);
         if (upstreamEvent.isPresent()) {
             List data = upstreamEvent.get().getData();
