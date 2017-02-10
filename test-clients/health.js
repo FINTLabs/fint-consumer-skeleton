@@ -1,7 +1,7 @@
 const uuid = require('uuid')
 const amqp = require('amqplib')
 
-console.log('Usage: npm run health <orgId>')
+console.log('Usage: npm start <orgId>')
 
 const config = {
   host: 'localhost',
@@ -10,9 +10,10 @@ const config = {
   vhost: '',
   orgId: process.argv[2] === undefined ? 'rogfk.no' : process.argv[2]
 }
+console.log(`Using orgId: ${config.orgId}`)
 
-const json = JSON.stringify({
-  corrId: uuid(),
+const reply = {
+  corrId: '',
   action: 'HEALTH_CHECK',
   status: "PROVIDER_ACCEPTED",
   time: new Date().getTime(),
@@ -20,16 +21,19 @@ const json = JSON.stringify({
   source: "fk",
   client: "vfs",
   message: null,
-  data: []
-})
- 
+  data: [ 'Reply from test-client' ]
+}
+
 const connectionString = `amqp://${config.user}:${config.password}@${config.host}:5672/${config.vhost}`
 const queue = `${config.orgId}.downstream`
 
+
 const consumeMsg = (channel) => {
-  return channel.assertQueue(queue, {durable: true}).then((ok) => {
+  return channel.assertQueue(queue, { durable: true }).then((ok) => {
     return channel.consume(queue, (msg) => {
-      channel.publish('', msg.properties.replyTo, new Buffer(json), { 'contentType': 'application/json' })
+      console.log(msg)
+      reply.corrId = uuid()
+      channel.publish('', msg.properties.replyTo, new Buffer(JSON.stringify(reply)), { 'contentType': 'application/json' })
       channel.ack(msg)
     })
   })
