@@ -1,7 +1,3 @@
 springfox:
  title: 'FINT Consumer Skeleton'
  version: '@version@'
-
-fint:
- events:
-  orgs: rogfk.no
