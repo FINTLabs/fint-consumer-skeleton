@@ -32,6 +32,7 @@ const consumeMsg = (channel) => {
   return channel.assertQueue(queue, { durable: true }).then((ok) => {
     return channel.consume(queue, (msg) => {
       reply.corrId = JSON.parse(msg.content.toString()).corrId
+      console.log(`Event received, corrId: ${reply.corrId}`)
       channel.publish('', msg.properties.replyTo, new Buffer(JSON.stringify(reply)), { 'contentType': 'application/json' })
       channel.ack(msg)
     })
