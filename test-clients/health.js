@@ -15,11 +15,11 @@ console.log(`Using orgId: ${config.orgId}`)
 const reply = {
   corrId: '',
   action: 'HEALTH_CHECK',
-  status: "PROVIDER_ACCEPTED",
+  status: 'TEMP_UPSTREAM_QUEUE',
   time: new Date().getTime(),
   orgId: config.orgId,
-  source: "fk",
-  client: "vfs",
+  source: 'fk',
+  client: 'vfs',
   message: null,
   data: [ 'Reply from test-client' ]
 }
@@ -27,12 +27,10 @@ const reply = {
 const connectionString = `amqp://${config.user}:${config.password}@${config.host}:5672/${config.vhost}`
 const queue = `${config.orgId}.downstream`
 
-
 const consumeMsg = (channel) => {
   return channel.assertQueue(queue, { durable: true }).then((ok) => {
     return channel.consume(queue, (msg) => {
-      console.log(msg)
-      reply.corrId = uuid()
+      reply.corrId = JSON.parse(msg.content.toString()).corrId
       channel.publish('', msg.properties.replyTo, new Buffer(JSON.stringify(reply)), { 'contentType': 'application/json' })
       channel.ack(msg)
     })
