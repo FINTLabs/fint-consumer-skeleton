@@ -1,7 +1,8 @@
-const uuid = require('uuid')
+const sleep = require('sleep')
 const amqp = require('amqplib')
 
 console.log('Usage: npm start <orgId>')
+sleep.sleep(15)
 
 const config = {
   host: 'localhost',

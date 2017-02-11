@@ -71,3 +71,6 @@ bootRun {
     systemProperties System.properties
 }
 
+task runAll(type: Exec) {
+    commandLine 'npm', 'run', 'all', '--prefix=test-clients'
+}
