@@ -1,4 +1,4 @@
-package no.fint.consumer.service;
+package no.fint.consumer.test;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

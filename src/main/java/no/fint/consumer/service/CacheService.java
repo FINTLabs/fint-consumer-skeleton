@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.cache.Cache;
 import no.fint.cache.FintCache;
 import no.fint.cache.model.CacheObject;
+import no.fint.consumer.test.TestObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

@@ -1,5 +1,9 @@
-package no.fint.consumer.admin
+package no.fint.consumer
 
+
+import no.fint.consumer.admin.AdminService
+import no.fint.consumer.admin.Health
+import no.fint.consumer.test.TestController
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -9,20 +13,20 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class AdminControllerSpec extends Specification {
-    private AdminController adminController
+class TestControllerSpec extends Specification {
+    private TestController controller
     private AdminService adminService
     private MockMvc mockMvc
 
     void setup() {
         adminService = Mock(AdminService)
-        adminController = new AdminController(adminService: adminService)
-        mockMvc = MockMvcBuilders.standaloneSetup(adminController).build()
+        controller = new TestController(adminService: adminService)
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build()
     }
 
     def "Send health check"() {
         when:
-        def response = mockMvc.perform(get('/admin/health').header('x-org-id', 'rogfk.no').header('x-client', 'test'))
+        def response = mockMvc.perform(get('/test/health').header('x-org-id', 'rogfk.no').header('x-client', 'test'))
 
         then:
         1 * adminService.healthCheck('rogfk.no', 'test') >> new Health()
@@ -32,9 +36,11 @@ class AdminControllerSpec extends Specification {
 
     def "Return bad request when health check without headers"() {
         when:
-        def response = mockMvc.perform(get('/admin/health'))
+        def response = mockMvc.perform(get('/test/health'))
 
         then:
         response.andExpect(status().isBadRequest())
     }
+
+
 }

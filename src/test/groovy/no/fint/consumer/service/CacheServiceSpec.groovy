@@ -1,5 +1,6 @@
 package no.fint.consumer.service
 
+import no.fint.consumer.test.TestObject
 import spock.lang.Specification
 
 class CacheServiceSpec extends Specification {
