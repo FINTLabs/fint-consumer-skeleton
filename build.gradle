@@ -70,6 +70,12 @@ bootRun {
     systemProperties System.properties
 }
 
+test {
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
 task runAll(type: Exec) {
     commandLine 'npm', 'run', 'all', '--prefix=test-clients'
 }
