@@ -1,5 +1,5 @@
 buildscript {
-    apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.0.0/dependencies.gradle'
+    apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.0.1/dependencies.gradle'
     ext {
         springBootVersion = springBootVersion
     }
@@ -38,7 +38,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
+    gradleVersion = gradleVersion
 }
 
 repositories {
