@@ -37,6 +37,10 @@ afterEvaluate {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.3'
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -45,7 +49,6 @@ repositories {
         url "http://dl.bintray.com/fint/maven"
     }
 }
-
 
 dependencies {
     compile('no.fint:fint-events:0.0.24')
