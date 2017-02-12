@@ -48,7 +48,6 @@ repositories {
 
 
 dependencies {
-    compile('no.fint:fint-model-arbeidstaker-java:1.0.0')
     compile('no.fint:fint-events:0.0.24')
     compile('no.fint:fint-event-model:0.0.11')
     compile('no.fint:fint-audit-mongo-plugin:0.0.12')
