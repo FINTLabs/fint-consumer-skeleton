@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import no.fint.consumer.admin.AdminService;
 import no.fint.consumer.admin.Health;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +23,17 @@ public class TestController {
     @Autowired
     private TestService testService;
 
-    @RequestMapping(value = "/health", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Value("${event-model-version:}")
+    private String eventModelVersion;
+
+    @RequestMapping(value = "/health", method = RequestMethod.GET)
     public Health healthCheck(@RequestHeader("x-org-id") String orgId, @RequestHeader("x-client") String client) {
         return adminService.healthCheck(orgId, client);
+    }
+
+    @RequestMapping(value = "/versions", method = RequestMethod.GET)
+    public Map<String, String> getVersions() {
+        return ImmutableMap.of("eventModelVersion", eventModelVersion);
     }
 
     @RequestMapping(value = "/last-updated", method = RequestMethod.GET)

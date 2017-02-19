@@ -26,14 +26,6 @@ jar {
     baseName = 'fint-consumer-skeleton'
 }
 
-afterEvaluate {
-    configure(processResources) {
-        filesMatching('**/*.yml') {
-            filter(ReplaceTokens, tokens: [version: jar.version])
-        }
-    }
-}
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -50,9 +42,13 @@ repositories {
     }
 }
 
+def modelVersions = [
+        event: '0.0.11'
+]
+
 dependencies {
     compile('no.fint:fint-events:0.0.24')
-    compile('no.fint:fint-event-model:0.0.11')
+    compile("no.fint:fint-event-model:${modelVersions['event']}")
     compile('no.fint:fint-audit-mongo-plugin:0.0.12')
     compile('com.github.fakemongo:fongo:2.0.12')
 
@@ -67,6 +63,15 @@ dependencies {
     testCompile('cglib:cglib-nodep:3.2.4')
     testCompile("org.spockframework:spock-spring:${spockSpringVersion}")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+afterEvaluate {
+    configure(processResources) {
+        filesMatching('**/*.yml') {
+            filter(ReplaceTokens, tokens: [version: jar.version])
+            filter(ReplaceTokens, tokens: [eventModelVersion: modelVersions['event']])
+        }
+    }
 }
 
 bootRun {
