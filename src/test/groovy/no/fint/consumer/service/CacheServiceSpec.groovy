@@ -13,7 +13,7 @@ class CacheServiceSpec extends Specification {
 
     def "Get last updated"() {
         when:
-        def lastUpdated = cacheService.getLastUpdated('rogfk.no')
+        def lastUpdated = cacheService.getLastUpdated('mock.no')
 
         then:
         lastUpdated != null
@@ -21,7 +21,7 @@ class CacheServiceSpec extends Specification {
 
     def "Get all persisted objects"() {
         when:
-        def objects = cacheService.getAll('rogfk.no')
+        def objects = cacheService.getAll('mock.no')
 
         then:
         objects.size() == 2
@@ -45,7 +45,7 @@ class CacheServiceSpec extends Specification {
 
     def "Get all objects with orgId and timestamp"() {
         when:
-        def objects = cacheService.getAll('rogfk.no', (System.currentTimeMillis() - 5000L))
+        def objects = cacheService.getAll('mock.no', (System.currentTimeMillis() - 5000L))
 
         then:
         objects.size() == 2
@@ -61,8 +61,8 @@ class CacheServiceSpec extends Specification {
 
     def "Update cache"() {
         when:
-        cacheService.update('rogfk.no', [new TestObject('test3'), new TestObject('test4'), new TestObject('test5')])
-        def objects = cacheService.getAll('rogfk.no')
+        cacheService.update('mock.no', [new TestObject('test3'), new TestObject('test4'), new TestObject('test5')])
+        def objects = cacheService.getAll('mock.no')
 
         then:
         objects.size() == 3
