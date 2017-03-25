@@ -43,20 +43,24 @@ repositories {
 }
 
 def modelVersions = [
-        event: '0.0.11'
+        event: '0.0.11',
+        relation: '0.0.1'
 ]
 
 dependencies {
+    compile("no.fint:fint-relation-model:${modelVersions['relation']}")
+    compile('no.fint:fint-relations:0.0.8')
     compile('no.fint:fint-events:0.0.24')
     compile("no.fint:fint-event-model:${modelVersions['event']}")
     compile('no.fint:fint-audit-mongo-plugin:0.0.12')
+    compile('no.fint:fint-cache:0.0.2')
     compile('com.github.fakemongo:fongo:2.0.12')
 
     compile('org.projectlombok:lombok')
-    compile('no.fint:fint-cache:0.0.2')
     compile("com.github.springfox.loader:springfox-loader:${springfoxLoaderVersion}")
     compile('io.github.benas:random-beans:3.3.0')
 
+    compile('org.springframework.cloud:spring-cloud-starter-config')
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-devtools')
 
@@ -70,7 +74,14 @@ afterEvaluate {
         filesMatching('**/*.yml') {
             filter(ReplaceTokens, tokens: [version: jar.version])
             filter(ReplaceTokens, tokens: [eventModelVersion: modelVersions['event']])
+            filter(ReplaceTokens, tokens: [relationModelVersion: modelVersions['relation']])
         }
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR5"
     }
 }
 
@@ -84,6 +95,3 @@ test {
     }
 }
 
-task runAll(type: Exec) {
-    commandLine 'npm', 'run', 'all', '--prefix=test-clients'
-}

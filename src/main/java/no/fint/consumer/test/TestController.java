@@ -26,18 +26,25 @@ public class TestController {
     @Value("${event-model-version:}")
     private String eventModelVersion;
 
+    @Value("${relation-model-version:}")
+    private String relationModelVersion;
+
     @RequestMapping(value = "/health", method = RequestMethod.GET)
-    public Health healthCheck(@RequestHeader("x-org-id") String orgId, @RequestHeader("x-client") String client) {
+    public Health healthCheck(@RequestHeader(value = "x-org-id", defaultValue = "mock.no") String orgId,
+                              @RequestHeader(value = "x-client", defaultValue = "mock") String client) {
         return adminService.healthCheck(orgId, client);
     }
 
     @RequestMapping(value = "/versions", method = RequestMethod.GET)
     public Map<String, String> getVersions() {
-        return ImmutableMap.of("eventModelVersion", eventModelVersion);
+        return ImmutableMap.of(
+                "eventModelVersion", eventModelVersion,
+                "relationModelVersion", relationModelVersion
+        );
     }
 
     @RequestMapping(value = "/last-updated", method = RequestMethod.GET)
-    private Map<String, String> getLastUpdated(@RequestHeader("x-org-id") String orgId) {
+    private Map<String, String> getLastUpdated(@RequestHeader(value = "x-org-id", defaultValue = "mock.no") String orgId) {
         String lastUpdated = testService.getLastUpdated(orgId);
         return ImmutableMap.of("lastUpdated", lastUpdated);
     }

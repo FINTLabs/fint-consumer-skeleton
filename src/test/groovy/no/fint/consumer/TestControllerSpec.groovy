@@ -19,7 +19,7 @@ class TestControllerSpec extends Specification {
 
     void setup() {
         adminService = Mock(AdminService)
-        controller = new TestController(adminService: adminService, eventModelVersion: '1.0.0')
+        controller = new TestController(adminService: adminService, eventModelVersion: '1.0.0', relationModelVersion: '1.0.0')
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build()
     }
 
@@ -41,14 +41,7 @@ class TestControllerSpec extends Specification {
         response.andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath('$.eventModelVersion').value(equalTo('1.0.0')))
-    }
-
-    def "Return bad request when health check without headers"() {
-        when:
-        def response = mockMvc.perform(get('/test/health'))
-
-        then:
-        response.andExpect(status().isBadRequest())
+                .andExpect(jsonPath('$.relationModelVersion').value(equalTo('1.0.0')))
     }
 
 

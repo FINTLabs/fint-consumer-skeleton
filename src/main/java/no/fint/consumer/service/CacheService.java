@@ -23,7 +23,7 @@ public class CacheService {
         cache.update(Lists.newArrayList(new TestObject("test1"), new TestObject("test2")));
 
         caches = new HashMap<>();
-        caches.put("rogfk.no", cache);
+        caches.put("mock.no", cache);
     }
 
     public long getLastUpdated(String orgId) {
