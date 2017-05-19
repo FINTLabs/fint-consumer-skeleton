@@ -23,7 +23,7 @@ class ConsumerEventUtilSpec extends Specification {
         consumerEventUtil = new ConsumerEventUtil(fintEventsHealth: fintEventsHealth, fintEvents: fintEvents, fintAuditService: fintAuditService)
     }
 
-    def "Send and receive Event"() {
+    def "Send and receive health check"() {
         given:
         def event = new Event(orgId: 'rogfk.no')
 
@@ -35,5 +35,17 @@ class ConsumerEventUtilSpec extends Specification {
         3 * fintAuditService.audit(_ as Event)
         1 * healthCheck.check(_ as Event) >> event
         response.isPresent()
+    }
+
+    def "Send downstream event"() {
+        given:
+        def event = new Event(orgId: 'rogfk.no')
+
+        when:
+        consumerEventUtil.send(event)
+
+        then:
+        3 * fintAuditService.audit(_ as Event)
+        1 * fintEvents.sendDownstream('rogfk.no', _ as Event)
     }
 }
