@@ -2,14 +2,12 @@ package no.fint.consumer.event;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.audit.FintAuditService;
-import no.fint.consumer.service.SubscriberService;
 import no.fint.event.model.Event;
 import no.fint.event.model.Status;
 import no.fint.events.FintEvents;
 import no.fint.events.FintEventsHealth;
 import no.fint.events.HealthCheck;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,9 +16,6 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class ConsumerEventUtil {
-
-    @Value("${fint.events.orgs:mock.no}")
-    private String[] orgIds;
 
     @Autowired
     private FintEvents fintEvents;
@@ -35,7 +30,6 @@ public class ConsumerEventUtil {
 
     @PostConstruct
     public void init() {
-        fintEvents.registerUpstreamListener(SubscriberService.class, orgIds);
         healthCheck = fintEventsHealth.registerClient();
     }
 
