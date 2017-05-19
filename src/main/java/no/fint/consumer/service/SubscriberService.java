@@ -10,6 +10,7 @@ public class SubscriberService {
 
     public void recieve(Event event) {
         log.info("Event received: {}", event.getCorrId());
+        // List<FintResource<Personalressurs>> personalressursList = EventUtil.convertEventData(event, new TypeReference<List<FintResource<Personalressurs>>>() {});
     }
 
 }

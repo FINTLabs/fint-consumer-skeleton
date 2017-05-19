@@ -6,7 +6,10 @@ import no.fint.consumer.service.SubscriberService;
 import no.fint.event.model.Event;
 import no.fint.event.model.Status;
 import no.fint.events.FintEvents;
+import no.fint.events.FintEventsHealth;
+import no.fint.events.HealthCheck;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,43 +17,51 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class EventUtil {
+public class ConsumerEventUtil {
+
+    @Value("${fint.events.orgs:mock.no}")
+    private String[] orgIds;
 
     @Autowired
     private FintEvents fintEvents;
 
     @Autowired
+    private FintEventsHealth fintEventsHealth;
+
+    @Autowired
     private FintAuditService fintAuditService;
+
+    private HealthCheck<Event> healthCheck;
 
     @PostConstruct
     public void init() {
-        fintEvents.registerUpstreamListener(SubscriberService.class);
+        fintEvents.registerUpstreamListener(SubscriberService.class, orgIds);
+        healthCheck = fintEventsHealth.registerClient();
     }
 
-    public Optional<Event> sendAndReceive(Event event) {
-        fintAuditService.audit(event, true);
+    public Optional<Event> healthCheck(Event event) {
+        fintAuditService.audit(event);
 
         event.setStatus(Status.DOWNSTREAM_QUEUE);
-        fintAuditService.audit(event, true);
+        fintAuditService.audit(event);
 
         log.info("Sending replyTo event {} to {}", event.getAction(), event.getOrgId());
-        Optional<Event> response = fintEvents.sendAndReceiveDownstream(event.getOrgId(), event, Event.class);
-        event.setStatus(Status.SENT_TO_CLIENT);
-        fintAuditService.audit(event, true);
+        Event response = healthCheck.check(event);
+        response.setStatus(Status.SENT_TO_CLIENT);
+        fintAuditService.audit(response);
 
-        return response;
+        return Optional.of(response);
     }
 
     public void send(Event event) {
-        fintAuditService.audit(event, true);
+        fintAuditService.audit(event);
 
         event.setStatus(Status.DOWNSTREAM_QUEUE);
-        fintAuditService.audit(event, true);
+        fintAuditService.audit(event);
 
         log.info("Sending replyTo event {} to {}", event.getAction(), event.getOrgId());
         fintEvents.sendDownstream(event.getOrgId(), event);
         event.setStatus(Status.SENT_TO_CLIENT);
-        fintAuditService.audit(event, true);
+        fintAuditService.audit(event);
     }
-
 }

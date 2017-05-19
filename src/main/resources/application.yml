@@ -1,6 +1,3 @@
 springfox:
  title: 'FINT Consumer Skeleton'
  version: '@version@'
-
-event-model-version: '@eventModelVersion@'
-relation-model-version: '@relationModelVersion@'

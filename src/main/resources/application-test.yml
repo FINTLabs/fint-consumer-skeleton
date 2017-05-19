@@ -1,6 +1,8 @@
 fint:
  events:
   orgs: mock.no
+  test-mode: true
+  queue-endpoint-enabled: true
 
  audit:
   test-mode: true
