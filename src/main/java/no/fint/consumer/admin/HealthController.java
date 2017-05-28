@@ -23,7 +23,7 @@ public class HealthController {
     @RequestMapping
     public Event<no.fint.event.model.Health> healthCheck(@RequestHeader(value = Constants.HEADER_ORGID) String orgId,
                                                          @RequestHeader(value = Constants.HEADER_CLIENT) String client) {
-        Event<no.fint.event.model.Health> event = new Event<>(orgId, "consumer", DefaultActions.HEALTH.name(), client);
+        Event<no.fint.event.model.Health> event = new Event<>(orgId, Constants.SOURCE, DefaultActions.HEALTH.name(), client);
         Optional<Event<Health>> health = consumerEventUtil.healthCheck(event);
 
         if (health.isPresent()) {
