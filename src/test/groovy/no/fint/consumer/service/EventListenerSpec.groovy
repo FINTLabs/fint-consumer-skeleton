@@ -1,18 +1,19 @@
 package no.fint.consumer.service
 
+import no.fint.consumer.event.EventListener
 import no.fint.event.model.Event
 import spock.lang.Specification
 
-class SubscriberServiceSpec extends Specification {
-    private SubscriberService subscriberService
+class EventListenerSpec extends Specification {
+    private EventListener eventListener
 
     void setup() {
-        subscriberService = new SubscriberService()
+        eventListener = new EventListener()
     }
 
     def "No exception is thrown when receiving event"() {
         when:
-        subscriberService.recieve(new Event(corrId: '123'))
+        eventListener.recieve(new Event(corrId: '123'))
 
         then:
         noExceptionThrown()

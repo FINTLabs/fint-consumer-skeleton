@@ -1,4 +1,4 @@
-package no.fint.consumer.service;
+package no.fint.consumer.event;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SubscriberService {
+public class EventListener {
 
     @FintEventListener(type = QueueType.UPSTREAM)
     public void recieve(Event event) {

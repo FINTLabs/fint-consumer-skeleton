@@ -3,14 +3,13 @@ package no.fint.consumer.event;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.audit.FintAuditService;
 import no.fint.event.model.Event;
+import no.fint.event.model.Health;
 import no.fint.event.model.Status;
 import no.fint.events.FintEvents;
 import no.fint.events.FintEventsHealth;
-import no.fint.events.HealthCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Slf4j
@@ -26,21 +25,14 @@ public class ConsumerEventUtil {
     @Autowired
     private FintAuditService fintAuditService;
 
-    private HealthCheck<Event> healthCheck;
-
-    @PostConstruct
-    public void init() {
-        healthCheck = fintEventsHealth.registerClient();
-    }
-
-    public Optional<Event> healthCheck(Event event) {
+    public Optional<Event<Health>> healthCheck(Event<Health> event) {
         fintAuditService.audit(event);
 
         event.setStatus(Status.DOWNSTREAM_QUEUE);
         fintAuditService.audit(event);
 
-        log.info("Sending replyTo event {} to {}", event.getAction(), event.getOrgId());
-        Event response = healthCheck.check(event);
+        log.info("Sending health check event {} to {}", event.getAction(), event.getOrgId());
+        Event<Health> response = fintEventsHealth.sendHealthCheck(event.getOrgId(), event.getCorrId(), event);
         response.setStatus(Status.SENT_TO_CLIENT);
         fintAuditService.audit(response);
 
@@ -53,7 +45,7 @@ public class ConsumerEventUtil {
         event.setStatus(Status.DOWNSTREAM_QUEUE);
         fintAuditService.audit(event);
 
-        log.info("Sending replyTo event {} to {}", event.getAction(), event.getOrgId());
+        log.info("Sending event {} to {}", event.getAction(), event.getOrgId());
         fintEvents.sendDownstream(event.getOrgId(), event);
         event.setStatus(Status.SENT_TO_CLIENT);
         fintAuditService.audit(event);
