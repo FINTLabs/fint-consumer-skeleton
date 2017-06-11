@@ -53,6 +53,8 @@ dependencies {
     compile('no.fint:fint-relation-model:0.0.22')
     compile('no.fint:fint-event-model:0.0.20')
 
+    /* --> Models <-- */
+
     compile('no.fint:fint-relations:0.0.20')
     compile('no.fint:fint-events:0.1.23')
     compile('no.fint:fint-audit-mongo-plugin:0.0.13')
