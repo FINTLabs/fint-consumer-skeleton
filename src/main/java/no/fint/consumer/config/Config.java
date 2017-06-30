@@ -1,4 +1,4 @@
-package no.fint.consumer;
+package no.fint.consumer.config;
 
 
 import org.springframework.beans.factory.annotation.Qualifier;

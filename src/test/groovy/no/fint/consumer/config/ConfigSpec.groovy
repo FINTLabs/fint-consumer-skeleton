@@ -1,4 +1,4 @@
-package no.fint.consumer
+package no.fint.consumer.config
 
 import spock.lang.Specification
 

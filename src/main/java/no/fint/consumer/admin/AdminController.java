@@ -1,6 +1,6 @@
 package no.fint.consumer.admin;
 
-import no.fint.consumer.Constants;
+import no.fint.consumer.config.Constants;
 import no.fint.consumer.event.ConsumerEventUtil;
 import no.fint.event.model.DefaultActions;
 import no.fint.event.model.Event;
