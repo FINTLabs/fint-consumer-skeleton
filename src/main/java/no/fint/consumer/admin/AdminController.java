@@ -29,13 +29,13 @@ public class AdminController {
     @GetMapping("/health")
     public ResponseEntity healthCheck(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
                                       @RequestHeader(HeaderConstants.CLIENT) String client) {
-        Event<Health> event = new Event<>(orgId, Constants.SOURCE, DefaultActions.HEALTH, client);
-        event.addData(new Health(Constants.CLIENT, HealthStatus.SENT_FROM_CONSUMER_TO_PROVIDER));
+        Event<Health> event = new Event<>(orgId, Constants.COMPONENT, DefaultActions.HEALTH, client);
+        event.addData(new Health(Constants.COMPONENT_CONSUMER, HealthStatus.SENT_FROM_CONSUMER_TO_PROVIDER));
         Optional<Event<Health>> health = consumerEventUtil.healthCheck(event);
 
         if (health.isPresent()) {
             Event<Health> receivedHealth = health.get();
-            receivedHealth.addData(new Health(Constants.CLIENT, HealthStatus.RECEIVED_IN_CONSUMER_FROM_PROVIDER));
+            receivedHealth.addData(new Health(Constants.COMPONENT_CONSUMER, HealthStatus.RECEIVED_IN_CONSUMER_FROM_PROVIDER));
             return ResponseEntity.ok(receivedHealth);
         } else {
             event.setMessage("No response from adapter");
