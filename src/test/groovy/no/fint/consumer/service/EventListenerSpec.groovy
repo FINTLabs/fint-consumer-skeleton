@@ -8,7 +8,7 @@ class EventListenerSpec extends Specification {
     private EventListener eventListener
 
     void setup() {
-        eventListener = new EventListener()
+        eventListener = new EventListener(cacheServices: [])
     }
 
     def "No exception is thrown when receiving event"() {
