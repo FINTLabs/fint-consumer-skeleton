@@ -35,10 +35,6 @@ public class Config {
         return LinkMapper.linkMapper(contextPath);
     }
 
-    String fullPath(String path) {
-        return String.format("%s%s", contextPath, path);
-    }
-
     @Value("${fint.consumer.cache-manager:default}")
     private String cacheManagerType;
 
