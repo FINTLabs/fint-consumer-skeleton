@@ -1,3 +1,3 @@
 springfox:
- title: 'FINT Consumer Skeleton'
- version: '@version@'
+  title: '@title@'
+  version: '@version@'

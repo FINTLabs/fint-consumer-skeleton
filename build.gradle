@@ -89,7 +89,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 afterEvaluate {
     configure(processResources) {
         filesMatching('**/*.yml') {
-            filter(ReplaceTokens, tokens: [version: jar.version])
+            filter(ReplaceTokens, tokens: [version: jar.version, title: jar.baseName])
         }
     }
 }
