@@ -3,7 +3,6 @@ package no.fint.consumer.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-import com.google.common.collect.ImmutableMap;
 import no.fint.cache.CacheManager;
 import no.fint.cache.FintCacheManager;
 import no.fint.cache.HazelcastCacheManager;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
@@ -34,9 +32,7 @@ public class Config {
     @Qualifier("linkMapper")
     @Bean
     public Map<String, String> linkMapper() {
-        return ImmutableMap.<String,String>builder()
-                /* .put(TODO,TODO) */
-                .build();
+        return LinkMapper.linkMapper(contextPath);
     }
 
     String fullPath(String path) {
