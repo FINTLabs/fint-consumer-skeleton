@@ -8,6 +8,9 @@ fint:
   test-mode: true
 
  relations:
-   force-https: false
+  force-https: false
+
+ hazelcast:
+  members: localhost
 
 link-mapper-base-url: http://localhost:8080

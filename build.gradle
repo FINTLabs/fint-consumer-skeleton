@@ -37,9 +37,9 @@ dependencies {
     /* --> Models <-- */
 
     compile('no.fint:fint-relations:1.2.0-2')
-    compile('no.fint:fint-events:2.0.0-1')
+    compile('no.fint:fint-events:2.0.1')
     compile('no.fint:fint-audit-mongo-plugin:1.1.1')
-    compile('no.fint:fint-cache:2.0.0-1')
+    compile('no.fint:fint-cache:2.0.1-beta-1')
     compile('no.fint:fint-dependencies:0.0.3')
 
     compile('org.projectlombok:lombok')

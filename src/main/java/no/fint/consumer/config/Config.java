@@ -3,6 +3,7 @@ package no.fint.consumer.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.hazelcast.config.*;
 import no.fint.cache.CacheManager;
 import no.fint.cache.FintCacheManager;
 import no.fint.cache.HazelcastCacheManager;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.Map;
 
 @Configuration
@@ -37,6 +39,15 @@ public class Config {
 
     @Value("${fint.consumer.cache-manager:default}")
     private String cacheManagerType;
+
+    @Value("${fint.hazelcast.members}")
+    private String members;
+
+    @Bean
+    public com.hazelcast.config.Config hazelcastConfig() {
+        com.hazelcast.config.Config cfg = new ClasspathXmlConfig("fint-hazelcast.xml");
+        return cfg.setNetworkConfig(new NetworkConfig().setJoin(new JoinConfig().setTcpIpConfig(new TcpIpConfig().setMembers(Arrays.asList(members.split(","))).setEnabled(true)).setMulticastConfig(new MulticastConfig().setEnabled(false))));
+    }
 
     @Bean
     public CacheManager<?> cacheManager() {
