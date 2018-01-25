@@ -9,8 +9,10 @@ fint:
 
  relations:
   force-https: false
+  default-base-url: /
 
  hazelcast:
   members: localhost
 
-link-mapper-base-url: http://localhost:8080
+server:
+ context-path: /
