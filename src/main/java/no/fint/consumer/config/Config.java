@@ -37,26 +37,4 @@ public class Config {
         return LinkMapper.linkMapper(contextPath);
     }
 
-    @Value("${fint.consumer.cache-manager:default}")
-    private String cacheManagerType;
-
-    @Value("${fint.hazelcast.members}")
-    private String members;
-
-    @Bean
-    public com.hazelcast.config.Config hazelcastConfig() {
-        com.hazelcast.config.Config cfg = new ClasspathXmlConfig("fint-hazelcast.xml");
-        return cfg.setNetworkConfig(new NetworkConfig().setJoin(new JoinConfig().setTcpIpConfig(new TcpIpConfig().setMembers(Arrays.asList(members.split(","))).setEnabled(true)).setMulticastConfig(new MulticastConfig().setEnabled(false))));
-    }
-
-    @Bean
-    public CacheManager<?> cacheManager() {
-        switch (cacheManagerType.toUpperCase()) {
-            case "HAZELCAST":
-                return new HazelcastCacheManager<>();
-            default:
-                return new FintCacheManager<>();
-        }
-    }
-
 }
