@@ -19,7 +19,6 @@ class EventListenerSpec extends Specification {
 
         then:
         noExceptionThrown()
-        1 * statusCache.containsKey('123') >> true
-        1 * statusCache.put(_ as String, _ as Event)
+        1 * statusCache.containsKey(_ as String) >> false
     }
 }
