@@ -73,7 +73,6 @@ build.dependsOn(copyExternalDependencies)
 build.dependsOn(copyFintDependencies)
 
 jar {
-    baseName = 'fint-consumer-skeleton'
     manifest {
         attributes(
                 "Manifest-Version": "1.0",
