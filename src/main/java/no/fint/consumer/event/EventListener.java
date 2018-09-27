@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @Component
 public class EventListener implements FintEventListener {
 
-    @Autowired
+    @Autowired(required = false)
     private List<CacheService> cacheServices;
     
 	@Autowired
@@ -38,6 +39,9 @@ public class EventListener implements FintEventListener {
 
     @PostConstruct
     public void init() {
+        fintEvents.registerUpstreamSystemListener(this);
+        if (cacheServices == null)
+            cacheServices = Collections.emptyList();
     	for (String orgId : props.getOrgs()) {
     		fintEvents.registerUpstreamListener(orgId, this);
     	}
@@ -48,6 +52,12 @@ public class EventListener implements FintEventListener {
 	public void accept(Event event) {
         log.debug("Received event: {}", event);
         log.trace("Event data: {}", event.getData());
+        if (event.isRegisterOrgId()) {
+            log.info("Registering orgId {} for {} ...", event.getOrgId(), event.getClient());
+            fintEvents.registerUpstreamListener(event.getOrgId(), this);
+            cacheServices.forEach(c -> c.createCache(event.getOrgId()));
+            return;
+        }
         if (statusCache.containsKey(event.getCorrId())) {
             statusCache.put(event.getCorrId(), event);
         }
