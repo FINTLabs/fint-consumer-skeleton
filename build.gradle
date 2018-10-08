@@ -49,6 +49,7 @@ dependencies {
 
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('org.springframework.boot:spring-boot-starter-actuator')
 
     testCompile('no.fint:fint-test-utils:0.0.4')
     testCompile("cglib:cglib-nodep:${cglibVersion}")
@@ -58,13 +59,13 @@ dependencies {
 }
 
 task copyExternalDependencies(type: Copy) {
-    from configurations.compile
+    from configurations.runtime
     into "$buildDir/deps/external"
     exclude '**/fint-*.jar'
 }
 
 task copyFintDependencies(type: Copy) {
-    from configurations.compile
+    from configurations.runtime
     into "$buildDir/deps/fint"
     include '**/fint-*.jar'
 }
@@ -79,7 +80,7 @@ jar {
                 "Main-Class": "no.fint.consumer.Application",
                 "Specification-Version": "${apiVersion}",
                 "Implementation-Version": "${version}",
-                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+                "Class-Path": configurations.runtime.collect { it.getName() }.join(' ')
         )
     }
 }
