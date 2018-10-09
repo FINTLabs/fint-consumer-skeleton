@@ -6,6 +6,8 @@ import no.fint.cache.CacheService;
 import no.fint.consumer.config.ConsumerProps;
 import no.fint.consumer.status.StatusCache;
 import no.fint.event.model.Event;
+import no.fint.event.model.Operation;
+import no.fint.event.model.ResponseStatus;
 import no.fint.event.model.Status;
 import no.fint.events.FintEventListener;
 import no.fint.events.FintEvents;
@@ -59,9 +61,20 @@ public class EventListener implements FintEventListener {
                 cacheServices.forEach(c -> c.createCache(event.getOrgId()));
             }
             return;
+        } else if (event.isHealthCheck()) {
+            log.debug("Ignoring health check.");
+            return;
         }
         if (statusCache.containsKey(event.getCorrId())) {
             statusCache.put(event.getCorrId(), event);
+        }
+        if (event.getOperation() == Operation.VALIDATE) {
+            log.debug("Ignoring validation event.");
+            return;
+        }
+        if (event.getResponseStatus() == ResponseStatus.REJECTED || event.getResponseStatus() == ResponseStatus.ERROR) {
+            log.debug("Ignoring response status {}", event.getResponseStatus());
+            return;
         }
         String action = event.getAction();
         List<CacheService> supportedCacheServices = cacheServices.stream().filter(cacheService -> cacheService.supportsAction(action)).collect(Collectors.toList());
@@ -70,7 +83,7 @@ public class EventListener implements FintEventListener {
                 supportedCacheServices.forEach(cacheService -> cacheService.onAction(event));
                 fintAuditService.audit(event, Status.CACHE);
             } catch (Exception e) {
-                log.warn("Error handling event {}", event.getCorrId(), e);
+                log.warn("Error handling event {} {}", event.getOrgId(), event.getCorrId(), e);
                 event.setMessage(ExceptionUtils.getStackTrace(e));
                 fintAuditService.audit(event, Status.ERROR);
             }
