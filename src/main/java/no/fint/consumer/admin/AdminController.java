@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -85,6 +86,19 @@ public class AdminController {
                 .collect(Collectors
                         .toMap(Function.identity(),
                                 k -> cacheManager.getCache(k).map(Cache::size).orElse(0)));
+    }
+
+    @GetMapping("/cache/status")
+    public Map<String, CacheEntry> getCacheStatus() {
+        return cacheManager
+                .getKeys()
+                .stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        k -> cacheManager
+                                .getCache(k)
+                                .map(c -> new CacheEntry(new Date(c.getLastUpdated()), c.size()))
+                                .orElse(new CacheEntry(null, null))));
     }
 
     @PostMapping({"/cache/rebuild", "/cache/rebuild/{model}"})
