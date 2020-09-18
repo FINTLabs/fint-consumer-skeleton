@@ -8,7 +8,6 @@ import no.fint.cache.utils.CacheUri;
 import no.fint.consumer.config.Constants;
 import no.fint.consumer.config.ConsumerProps;
 import no.fint.consumer.event.ConsumerEventUtil;
-import no.fint.consumer.event.SynchronousEvents;
 import no.fint.consumer.utils.RestEndpoints;
 import no.fint.event.model.DefaultActions;
 import no.fint.event.model.Event;
@@ -24,8 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -47,30 +45,24 @@ public class AdminController {
     @Autowired
     private ConsumerProps props;
 
-    @Autowired
-    private SynchronousEvents synchronousEvents;
-
     @GetMapping("/health")
-    public ResponseEntity healthCheck(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                      @RequestHeader(HeaderConstants.CLIENT) String client) throws InterruptedException {
+    public ResponseEntity<Event<Health>> healthCheck(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
+                                      @RequestHeader(HeaderConstants.CLIENT) String client) {
         log.debug("Health check on {} requested by {} ...", orgId, client);
         Event<Health> event = new Event<>(orgId, Constants.COMPONENT, DefaultActions.HEALTH, client);
         event.addData(new Health(Constants.COMPONENT_CONSUMER, HealthStatus.SENT_FROM_CONSUMER_TO_PROVIDER));
 
-        BlockingQueue<Event> queue = synchronousEvents.register(event);
-        consumerEventUtil.send(event);
+        final Optional<Event<Health>> response = consumerEventUtil.healthCheck(event);
 
-        Event<Health> health = queue.poll(30, TimeUnit.SECONDS);
-
-        if (health != null) {
+        return response.map(health ->  {
             log.debug("Health check response: {}", health.getData());
             health.addData(new Health(Constants.COMPONENT_CONSUMER, HealthStatus.RECEIVED_IN_CONSUMER_FROM_PROVIDER));
             return ResponseEntity.ok(health);
-        } else {
+        }).orElseGet(() -> {
             log.debug("No response to health event.");
             event.setMessage("No response from adapter");
             return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(event);
-        }
+        });
     }
 
     @GetMapping("/organisations")
