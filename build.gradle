@@ -26,11 +26,15 @@ apply plugin: 'jacoco'
 version = "${version}-${apiVersion}"
 
 repositories {
-    mavenLocal()
+    mavenCentral()
     jcenter()
     maven {
-        url "http://dl.bintray.com/fint/maven"
+        url 'https://repo.fintlabs.no/releases'
     }
+    maven {
+        url "https://dl.bintray.com/fint/maven"
+    }
+    mavenLocal()
 }
 
 dependencies {
@@ -47,7 +51,7 @@ dependencies {
     compile('no.fint:fint-events:2.3.0')
     compile('no.fint:fint-hazelcast:1.2.0-rc-1')
     compile('no.fint:fint-relations:2.2.0')
-    compile('no.fint:fint-security-access-policy:1.0.0')
+    compile('no.fint:fint-security-access-policy:1.2.0-rc-7')
     compile('no.fint:fint-spring-secrets:0.1.0')
 
     compile('com.hazelcast:hazelcast:3.11.2')

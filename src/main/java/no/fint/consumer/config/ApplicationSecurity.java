@@ -1,9 +1,8 @@
 package no.fint.consumer.config;
 
 import no.fint.consumer.utils.RestEndpoints;
-import no.fint.security.access.policy.FintAccessDecisionVoter;
-import no.fint.security.access.policy.FintAccessUserDetailsService;
-import no.fint.security.access.policy.FintRequestHeaderPreauthProcessingFilter;
+import no.fint.security.access.policy.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
@@ -11,12 +10,25 @@ import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 @Configuration
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
+
+    @Value("${fint.idp.well-known-oauth-configuration}")
+    String wellKnownLocation;
+
+    @Value("${fint.security.debug:false}")
+    boolean debug;
+
+    @Value("${fint.security.scope}")
+    String scope;
+
+    @Value("${fint.security.role}")
+    String role;
 
     @Bean
     FintAccessDecisionVoter fintAccessDecisionVoter() {
@@ -24,10 +36,21 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    FintRequestHeaderPreauthProcessingFilter fintRequestHeaderPreauthProcessingFilter() throws Exception {
-        final FintRequestHeaderPreauthProcessingFilter fintRequestHeaderPreauthProcessingFilter = new FintRequestHeaderPreauthProcessingFilter();
-        fintRequestHeaderPreauthProcessingFilter.setAuthenticationManager(authenticationManager());
-        return fintRequestHeaderPreauthProcessingFilter;
+    FintAccessScopeVoter fintAccessScopeVoter() {
+        return new FintAccessScopeVoter(scope);
+    }
+
+    @Bean
+    FintAccessRoleVoter fintAccessRoleVoter() {
+        return new FintAccessRoleVoter(role);
+    }
+
+    @Bean
+    FintBearerTokenJwtPreAuthenticatedProcessingFilter fintBearerTokenJwtPreAuthenticatedProcessingFilter() throws Exception {
+        final FintBearerTokenJwtPreAuthenticatedProcessingFilter fintBearerTokenJwtPreAuthenticatedProcessingFilter
+                = new FintBearerTokenJwtPreAuthenticatedProcessingFilter(wellKnownLocation);
+        fintBearerTokenJwtPreAuthenticatedProcessingFilter.setAuthenticationManager(authenticationManager());
+        return fintBearerTokenJwtPreAuthenticatedProcessingFilter;
     }
 
     @Bean
@@ -44,12 +67,12 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     AccessDecisionManager accessDecisionManager() {
-        return new UnanimousBased(Collections.singletonList(fintAccessDecisionVoter()));
+        return new UnanimousBased(Arrays.asList(fintAccessDecisionVoter(), fintAccessScopeVoter(), fintAccessRoleVoter()));
     }
 
     @Override
     public void configure(WebSecurity web) {
-        web.debug(true)
+        web.debug(debug)
                 .ignoring()
                 .antMatchers(RestEndpoints.ADMIN + "/**");
     }
@@ -58,8 +81,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .sessionManagement().disable()
-                .addFilter(fintRequestHeaderPreauthProcessingFilter())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .addFilter(fintBearerTokenJwtPreAuthenticatedProcessingFilter())
                 .authenticationProvider(preAuthenticatedAuthenticationProvider())
                 .authorizeRequests()
                 .anyRequest()
