@@ -1,7 +1,5 @@
 package no.fint.consumer.event;
 
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Tag;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.audit.FintAuditService;
 import no.fint.cache.CacheService;
@@ -14,15 +12,12 @@ import no.fint.events.FintEventListener;
 import no.fint.events.FintEvents;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Component
