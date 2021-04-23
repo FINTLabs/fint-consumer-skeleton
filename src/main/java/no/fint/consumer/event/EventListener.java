@@ -1,5 +1,7 @@
 package no.fint.consumer.event;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.audit.FintAuditService;
 import no.fint.cache.CacheService;
@@ -11,12 +13,15 @@ import no.fint.events.FintEventListener;
 import no.fint.events.FintEvents;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -39,6 +44,14 @@ public class EventListener implements FintEventListener {
 
     @Autowired
     private SynchronousEvents synchronousEvents;
+
+    @Autowired
+    private MeterRegistry meterRegistry;
+
+    private static final String CUSTOM_METRIC_EVENTS = "fint.core.events";
+
+    @Value("${fint.consumer.custom.metric.events:false}")
+    private boolean customMetricEvents;
 
     @PostConstruct
     public void init() {
@@ -73,6 +86,11 @@ public class EventListener implements FintEventListener {
             }
             return;
         }
+
+        if (customMetricEvents) {
+            updateCustomMetric(event);
+        }
+
         if (statusCache.containsKey(event.getCorrId())) {
             statusCache.put(event.getCorrId(), event);
         }
@@ -104,4 +122,15 @@ public class EventListener implements FintEventListener {
         }
     }
 
+    private void updateCustomMetric(Event event) {
+        meterRegistry.counter(CUSTOM_METRIC_EVENTS, getTags(event)).increment();
+    }
+
+    private List<Tag> getTags(Event event) {
+        return Arrays.asList(
+                Tag.of("orgId", event.getOrgId()),
+                Tag.of("eventType", event.getAction()),
+                Tag.of("eventOperation", Optional.ofNullable(event.getOperation()).map(Operation::name).orElse("READ")),
+                Tag.of("eventResponseStatus", event.getResponseStatus().name()));
+    }
 }
