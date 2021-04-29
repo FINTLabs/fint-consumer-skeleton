@@ -31,8 +31,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     String role;
 
     @Bean
-    FintAccessDecisionVoter fintAccessDecisionVoter() {
-        return new FintAccessDecisionVoter();
+    FintAccessPolicyVoter fintAccessPolicyVoter() {
+        return new FintAccessPolicyVoter();
     }
 
     @Bean
@@ -67,7 +67,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     AccessDecisionManager accessDecisionManager() {
-        return new UnanimousBased(Arrays.asList(fintAccessDecisionVoter(), fintAccessScopeVoter(), fintAccessRoleVoter()));
+        return new UnanimousBased(Arrays.asList(fintAccessPolicyVoter(), fintAccessScopeVoter(), fintAccessRoleVoter()));
     }
 
     @Override
