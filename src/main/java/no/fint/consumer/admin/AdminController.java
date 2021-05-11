@@ -46,6 +46,7 @@ public class AdminController {
     @Autowired
     private ConsumerProps props;
 
+    // TODO Rewrite to use something other than request headers (FC-51)
     @GetMapping("/health")
     public ResponseEntity<Event<Health>> healthCheck(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
                                                      @RequestHeader(HeaderConstants.CLIENT) String client) {
