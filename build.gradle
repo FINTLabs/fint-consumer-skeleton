@@ -43,7 +43,6 @@ dependencies {
 
     compile('no.fint:fint-api-service-discover:1.1.1')
     compile('no.fint:fint-cache:2.6.1')
-    //compile('no.fint:fint-dependencies:0.0.3')
     compile('no.fint:fint-event-model:3.0.1')
     compile('no.fint:fint-events:2.3.1')
     compile('no.fint:fint-hazelcast:1.2.0')
