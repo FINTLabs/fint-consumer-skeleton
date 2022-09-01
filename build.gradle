@@ -26,11 +26,9 @@ apply plugin: 'jacoco'
 version = "${version}-${apiVersion}"
 
 repositories {
-    mavenLocal()
+    maven { url 'https://repo.fintlabs.no/releases' }
     jcenter()
-    maven {
-        url 'https://repo.fintlabs.no/releases'
-    }
+    mavenLocal()
 }
 
 dependencies {
