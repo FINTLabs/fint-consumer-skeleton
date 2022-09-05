@@ -18,7 +18,7 @@ jobs:
           echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
           echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
         env: 
-          TAG_NAME: ${{env.TAG_NAME}}
+          TAG_NAME: ${{github.event.release.tag_name}}
 
       - name: Connect to Azure Container Registry (ACR)
         uses: azure/docker-login@v1
