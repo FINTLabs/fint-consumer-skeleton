@@ -1,13 +1,11 @@
 name: Publish to Azure Container Registry
 
 on:
-  push:
-#  release:
-#    types: [ published ]
+  release:
+    types: [ published ]
 
 env:
   REGISTRY_NAME: fintlabsacr
-  TAG_NAME: v3.11.0
 
 jobs:
   publish:
