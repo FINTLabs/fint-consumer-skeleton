@@ -18,5 +18,5 @@ jobs:
       - name: Build container
         run: |
           API_VERSION=`cat gradle.properties | grep apiVersion | cut -d'=' -f2`
-          echo Current version is $API_VERSION
+          echo Current API version is $API_VERSION
           docker build . -t ${{env.REGISTRY_NAME}}.azurecr.io/${{env.REPO_NAME}}:${{github.sha}} --build-arg apiVersion=$API_VERSION
