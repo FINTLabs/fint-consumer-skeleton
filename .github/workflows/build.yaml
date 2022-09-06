@@ -17,4 +17,5 @@ jobs:
 
       - name: Build container
         run: |
-          docker build . -t ${{env.REGISTRY_NAME}}.azurecr.io/${{env.REPO_NAME}}:${{github.sha}}
+          API_VERSION=`cat gradle.properties | grep apiVersion | cut -d'=' -f2`
+          docker build . -t ${{env.REGISTRY_NAME}}.azurecr.io/${{env.REPO_NAME}}:${{github.sha}} --build-arg apiVersion=$API_VERSION

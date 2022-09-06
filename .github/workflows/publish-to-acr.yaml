@@ -29,5 +29,6 @@ jobs:
 
       - name: Container build and push to a Azure Container Registry (ACR)
         run: |
-          docker build . -t ${{env.REGISTRY_NAME}}.azurecr.io/${{env.REPO_NAME}}:${{env.RELEASE_VERSION}}
+          API_VERSION=`cat gradle.properties | grep apiVersion | cut -d'=' -f2`
+          docker build . -t ${{env.REGISTRY_NAME}}.azurecr.io/${{env.REPO_NAME}}:${{env.RELEASE_VERSION}} --build-arg apiVersion=$API_VERSION
           docker push ${{env.REGISTRY_NAME}}.azurecr.io/${{env.REPO_NAME}}:${{env.RELEASE_VERSION}}
