@@ -2,11 +2,12 @@ package no.fint.consumer.status
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.fint.audit.FintAuditService
-import no.fint.consumer.config.ConsumerProps
+import no.novari.fint.consumer.consumer.config.ConsumerProps
 import no.fint.consumer.test.TestObject
 import no.fint.event.model.Event
 import no.fint.event.model.ResponseStatus
 import no.fint.relations.FintLinker
+import no.novari.fint.consumer.consumer.status.StatusCache
 import org.springframework.http.HttpStatus
 import spock.lang.Specification
 
