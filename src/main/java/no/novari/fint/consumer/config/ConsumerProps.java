@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.config;
+package no.novari.fint.consumer.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;

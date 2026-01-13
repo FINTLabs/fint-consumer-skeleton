@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer;
+package no.novari.fint.consumer;
 
 import com.github.springfox.loader.EnableSpringfox;
 import no.fint.antlr.EnableFintFilter;

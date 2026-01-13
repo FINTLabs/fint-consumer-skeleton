@@ -4,8 +4,6 @@ import no.fint.audit.FintAuditService
 import no.fint.event.model.Event
 import no.fint.event.model.Status
 import no.fint.events.FintEvents
-import no.novari.fint.consumer.consumer.event.ConsumerEventUtil
-import no.novari.fint.consumer.consumer.event.SynchronousEvents
 import spock.lang.Specification
 
 import java.util.concurrent.BlockingQueue

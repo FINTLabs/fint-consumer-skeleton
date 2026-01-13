@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.utils;
+package no.novari.fint.consumer.utils;
 
 public enum RestEndpoints {
     ;

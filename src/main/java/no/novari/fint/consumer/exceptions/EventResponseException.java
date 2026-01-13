@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.exceptions;
+package no.novari.fint.consumer.exceptions;
 
 import no.fint.event.model.EventResponse;
 import org.springframework.http.HttpStatus;

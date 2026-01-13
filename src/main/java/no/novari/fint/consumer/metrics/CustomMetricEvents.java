@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.metrics;
+package no.novari.fint.consumer.metrics;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;

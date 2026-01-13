@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.exceptions;
+package no.novari.fint.consumer.exceptions;
 
 @SuppressWarnings("ALL")
 public class UpdateEntityMismatchException extends RuntimeException {

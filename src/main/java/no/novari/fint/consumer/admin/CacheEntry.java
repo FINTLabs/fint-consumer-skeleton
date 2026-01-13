@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.admin;
+package no.novari.fint.consumer.admin;
 
 import lombok.Data;
 

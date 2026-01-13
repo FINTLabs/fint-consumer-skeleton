@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.config;
+package no.novari.fint.consumer.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.AntPathMatcher;

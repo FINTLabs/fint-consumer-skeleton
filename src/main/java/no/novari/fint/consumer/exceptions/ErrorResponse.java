@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.exceptions;
+package no.novari.fint.consumer.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

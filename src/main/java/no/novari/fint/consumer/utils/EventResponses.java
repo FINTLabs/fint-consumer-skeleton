@@ -1,6 +1,6 @@
-package no.novari.fint.consumer.consumer.utils;
+package no.novari.fint.consumer.utils;
 
-import no.novari.fint.consumer.consumer.exceptions.EventResponseException;
+import no.novari.fint.consumer.exceptions.EventResponseException;
 import no.fint.event.model.Event;
 import no.fint.event.model.EventResponse;
 import org.apache.commons.lang3.StringUtils;

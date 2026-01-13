@@ -1,4 +1,4 @@
-package no.novari.fint.consumer.consumer.config;
+package no.novari.fint.consumer.config;
 
 public enum Constants {
     ;

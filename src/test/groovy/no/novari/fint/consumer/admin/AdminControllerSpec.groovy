@@ -1,9 +1,8 @@
 package no.novari.fint.consumer.admin
 
 import no.fint.audit.FintAuditService
-import no.novari.fint.consumer.consumer.admin.AdminController
-import no.novari.fint.consumer.consumer.event.ConsumerEventUtil
-import no.novari.fint.consumer.consumer.event.SynchronousEvents
+import no.novari.fint.consumer.event.ConsumerEventUtil
+import no.novari.fint.consumer.event.SynchronousEvents
 import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
 import no.fint.event.model.HeaderConstants
