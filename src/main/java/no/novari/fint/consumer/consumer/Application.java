@@ -5,7 +5,7 @@ import no.fint.antlr.EnableFintFilter;
 import no.fint.audit.EnableFintAudit;
 import no.fint.cache.annotations.EnableFintCache;
 import no.fint.events.annotations.EnableFintEvents;
-import no.fint.relations.annotations.EnableFintRelations;
+import no.novari.fint.relations.annotations.EnableFintRelations;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;

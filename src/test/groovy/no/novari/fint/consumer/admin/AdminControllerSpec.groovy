@@ -1,4 +1,4 @@
-package no.fint.consumer.admin
+package no.novari.fint.consumer.admin
 
 import no.fint.audit.FintAuditService
 import no.novari.fint.consumer.consumer.admin.AdminController

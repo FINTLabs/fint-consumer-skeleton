@@ -1,4 +1,4 @@
-package no.fint.consumer.test
+package no.novari.fint.consumer.test
 
 import no.novari.fint.model.resource.FintLinks
 import no.novari.fint.model.resource.Link

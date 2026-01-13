@@ -1,4 +1,4 @@
-package no.fint.consumer.event
+package no.novari.fint.consumer.event
 
 import no.fint.audit.FintAuditService
 import no.fint.event.model.Event
