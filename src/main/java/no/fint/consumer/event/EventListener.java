@@ -1,12 +1,12 @@
-package no.fint.consumer.consumer.event;
+package no.fint.consumer.event;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.audit.FintAuditService;
 import no.fint.cache.CacheService;
-import no.fint.consumer.consumer.config.Constants;
-import no.fint.consumer.consumer.config.ConsumerProps;
-import no.fint.consumer.consumer.metrics.CustomMetricEvents;
-import no.fint.consumer.consumer.status.StatusCache;
+import no.fint.consumer.config.Constants;
+import no.fint.consumer.config.ConsumerProps;
+import no.fint.consumer.metrics.CustomMetricEvents;
+import no.fint.consumer.status.StatusCache;
 import no.fint.event.model.*;
 import no.fint.events.FintEventListener;
 import no.fint.events.FintEvents;

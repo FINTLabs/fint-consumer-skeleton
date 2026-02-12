@@ -1,14 +1,14 @@
-package no.fint.consumer.consumer.admin;
+package no.fint.consumer.admin;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.cache.Cache;
 import no.fint.cache.CacheManager;
 import no.fint.cache.CacheService;
 import no.fint.cache.utils.CacheUri;
-import no.fint.consumer.consumer.config.Constants;
-import no.fint.consumer.consumer.config.ConsumerProps;
-import no.fint.consumer.consumer.event.ConsumerEventUtil;
-import no.fint.consumer.consumer.utils.RestEndpoints;
+import no.fint.consumer.config.Constants;
+import no.fint.consumer.config.ConsumerProps;
+import no.fint.consumer.event.ConsumerEventUtil;
+import no.fint.consumer.utils.RestEndpoints;
 import no.fint.event.model.DefaultActions;
 import no.fint.event.model.Event;
 import no.fint.event.model.HeaderConstants;

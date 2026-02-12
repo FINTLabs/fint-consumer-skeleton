@@ -1,9 +1,8 @@
 package no.fint.consumer.admin
 
 import no.fint.audit.FintAuditService
-import no.fint.consumer.consumer.admin.AdminController
-import no.fint.consumer.consumer.event.ConsumerEventUtil
-import no.fint.consumer.consumer.event.SynchronousEvents
+import no.fint.consumer.event.ConsumerEventUtil
+import no.fint.consumer.event.SynchronousEvents
 import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
 import no.fint.event.model.HeaderConstants

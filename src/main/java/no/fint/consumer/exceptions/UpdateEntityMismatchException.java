@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.exceptions;
+package no.fint.consumer.exceptions;
 
 @SuppressWarnings("ALL")
 public class UpdateEntityMismatchException extends RuntimeException {

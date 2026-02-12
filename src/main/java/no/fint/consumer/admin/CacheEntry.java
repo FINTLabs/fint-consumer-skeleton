@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.admin;
+package no.fint.consumer.admin;
 
 import lombok.Data;
 

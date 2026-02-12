@@ -1,6 +1,6 @@
-package no.fint.consumer.consumer.utils;
+package no.fint.consumer.utils;
 
-import no.fint.consumer.consumer.exceptions.EventResponseException;
+import no.fint.consumer.exceptions.EventResponseException;
 import no.fint.event.model.Event;
 import no.fint.event.model.EventResponse;
 import org.apache.commons.lang3.StringUtils;

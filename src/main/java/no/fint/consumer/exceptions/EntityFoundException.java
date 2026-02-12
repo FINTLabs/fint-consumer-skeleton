@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.exceptions;
+package no.fint.consumer.exceptions;
 
 public class EntityFoundException extends RuntimeException {
     public EntityFoundException(String message) {

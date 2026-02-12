@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.utils;
+package no.fint.consumer.utils;
 
 public enum RestEndpoints {
     ;

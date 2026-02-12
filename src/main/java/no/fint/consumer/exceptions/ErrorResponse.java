@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.exceptions;
+package no.fint.consumer.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

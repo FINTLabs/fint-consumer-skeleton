@@ -1,9 +1,7 @@
 package no.fint.consumer.event
 
 import no.fint.audit.FintAuditService
-import no.fint.consumer.consumer.event.EventListener
-import no.fint.consumer.consumer.event.SynchronousEvents
-import no.fint.consumer.consumer.status.StatusCache
+import no.fint.consumer.status.StatusCache
 import no.fint.event.model.Event
 import no.fint.event.model.Status
 import spock.lang.Specification

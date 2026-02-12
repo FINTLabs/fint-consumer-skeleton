@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer;
+package no.fint.consumer;
 
 import com.github.springfox.loader.EnableSpringfox;
 import no.fint.antlr.EnableFintFilter;

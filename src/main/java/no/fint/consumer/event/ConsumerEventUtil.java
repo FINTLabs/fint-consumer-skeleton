@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.event;
+package no.fint.consumer.event;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.audit.FintAuditService;

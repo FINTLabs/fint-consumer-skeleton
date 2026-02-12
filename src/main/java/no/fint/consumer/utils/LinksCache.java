@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.utils;
+package no.fint.consumer.utils;
 
 import no.novari.fint.model.FintRelation;
 import no.novari.fint.model.resource.FintResource;

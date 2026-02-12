@@ -1,11 +1,11 @@
-package no.fint.consumer.consumer.status;
+package no.fint.consumer.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.audit.FintAuditService;
-import no.fint.consumer.consumer.config.ConsumerProps;
+import no.fint.consumer.config.ConsumerProps;
 import no.fint.event.model.Event;
 import no.fint.event.model.EventResponse;
 import no.fint.event.model.Operation;

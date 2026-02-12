@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.event;
+package no.fint.consumer.event;
 
 import no.fint.event.model.Event;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.config;
+package no.fint.consumer.config;
 
 
 import com.fasterxml.jackson.databind.DeserializationFeature;

@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.exceptions;
+package no.fint.consumer.exceptions;
 
 public class CacheDisabledException extends RuntimeException {
     public CacheDisabledException(String message) {

@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.metrics;
+package no.fint.consumer.metrics;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;

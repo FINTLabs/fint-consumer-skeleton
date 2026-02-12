@@ -1,4 +1,4 @@
-package no.fint.consumer.consumer.exceptions;
+package no.fint.consumer.exceptions;
 
 import no.fint.event.model.EventResponse;
 import org.springframework.http.HttpStatus;
