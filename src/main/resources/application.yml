@@ -5,3 +5,7 @@ springfox:
 spring:
   mvc:
     logResolvedException: false
+
+fint:
+  domainName: "domainname"
+  packageName: "pkg"
