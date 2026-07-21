@@ -2,6 +2,11 @@ springfox:
   title: '@title@'
   version: '@version@'
 
+fint:
+  hazelcast:
+    config: fint-consumer-hazelcast.xml
+
+
 spring:
   mvc:
     logResolvedException: false
