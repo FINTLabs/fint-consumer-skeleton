@@ -36,7 +36,7 @@ dependencies {
     /* --> Models <-- */
 
     compile('no.fint:fint-audit-azure-eventhub-plugin:1.0.0')
-    compile('io.projectreactor:reactor-core:3.3.2.RELEASE')
+    compile('io.projectreactor:reactor-core:3.9.0')
 
     compile('no.fint:fint-api-service-discover:1.2.0')
     compile('no.fint:fint-cache:3.0.0')
